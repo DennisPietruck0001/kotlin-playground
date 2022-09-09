@@ -1,0 +1,51 @@
+buildscript {
+    ext {
+        kotlinVersion = "1.7.10"
+    }
+    repositories {
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+        mavenCentral()
+    }
+    dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
+        classpath 'io.gitlab.arturbosch.detekt:detekt-gradle-plugin:1.21.0'
+    }
+}
+
+apply plugin: 'idea'
+apply plugin: org.jetbrains.kotlin.gradle.plugin.KotlinPlatformJvmPlugin
+apply plugin: io.gitlab.arturbosch.detekt.DetektPlugin
+
+
+tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
+    kotlinOptions {
+        freeCompilerArgs = ["-Xjsr305=strict"]
+        jvmTarget = "1.8"
+    }
+}
+
+tasks.withType(Test) {
+    useJUnitPlatform()
+    systemProperties = [
+            'junit.jupiter.extensions.autodetection.enabled': 'true',
+            'junit.jupiter.testinstance.lifecycle.default'  : 'per_class'
+    ]
+}
+
+dependencies {
+    // Align versions of all Kotlin components
+    implementation platform("org.jetbrains.kotlin:kotlin-bom")
+    implementation platform(libs.junit5.bom)
+
+    implementation 'org.jetbrains.kotlin:kotlin-stdlib'
+    implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk8'
+
+    testImplementation 'org.junit.jupiter:junit-jupiter-api'
+    testImplementation 'org.junit.jupiter:junit-jupiter-params'
+    testImplementation 'org.junit.platform:junit-platform-runner'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
+    testImplementation libs.assertj
+    testImplementation libs.mockk
+}

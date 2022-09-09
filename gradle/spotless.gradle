@@ -1,0 +1,42 @@
+buildscript {
+    repositories {
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+    }
+    dependencies { classpath 'com.diffplug.spotless:spotless-plugin-gradle:5.12.5' }
+}
+apply plugin: com.diffplug.gradle.spotless.SpotlessPlugin
+
+spotless {
+    format 'misc', {
+        target '*.md', '*.gitignore'
+        trimTrailingWhitespace()
+        indentWithSpaces()
+        endWithNewline()
+    }
+    groovyGradle {
+        target '**/*.gradle', '*.gradle'
+        greclipse()
+
+        trimTrailingWhitespace()
+        indentWithSpaces()
+        endWithNewline()
+    }
+    kotlinGradle {
+        target '*.gradle.kts', '**/*.gradle.kts'
+        ktlint()
+    }
+    java {
+        target '**/*.java'
+        googleJavaFormat('1.7').aosp()
+    }
+    kotlin {
+        target '**/*.kt'
+        ktlint("0.41.0")
+    }
+    sql {
+        target '**/*.sql'
+    }
+    encoding 'UTF-8'
+}

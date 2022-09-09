@@ -1,0 +1,16 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+}
+
+apply from: "$rootDir/gradle/spotless.gradle"
+
+wrapper {
+    distributionType = Wrapper.DistributionType.ALL
+    gradleVersion = '7.5.1'
+}
+
+subprojects {
+    apply from: "$rootDir/gradle/spotless.gradle"
+}
