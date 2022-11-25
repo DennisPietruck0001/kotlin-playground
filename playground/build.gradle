@@ -1,6 +1,8 @@
 apply from: "$rootDir/gradle/kotlin.gradle"
+apply plugin: 'kotlin'
 
 buildscript {
+    ext.kotlin_version = '1.8.0-Beta'
     repositories {
         mavenCentral()
         maven {
@@ -10,6 +12,7 @@ buildscript {
 
     dependencies {
         classpath "gradle.plugin.com.github.johnrengelman:shadow:7.1.2"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     }
 }
 
@@ -27,4 +30,19 @@ shadowJar {
 }
 
 dependencies {
+implementation 'org.testng:testng:7.1.0'
+    implementation 'junit:junit:4.13.1'
+    implementation 'junit:junit:4.13.1'
+    implementation 'junit:junit:4.13.1'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+}
+compileKotlin {
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+}
+compileTestKotlin {
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
 }
