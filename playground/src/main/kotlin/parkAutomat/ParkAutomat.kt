@@ -1,0 +1,4 @@
+package parkAutomat
+
+class ParkAutomat {
+}
