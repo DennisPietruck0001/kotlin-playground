@@ -25,7 +25,7 @@ fun makeWord(listOfAlphabets: List<String>): List<String> {
     return listOfAlphabets.flatMap { it.split(" ") }
 }
 
-// eine Funktion, die eine Liste aus Strings bekommt und eine Map zurückgibt. Dabei ist der Key ein Wort aus der LIste und der Value die Häufigkeit
+// eine Funktion, die eine Liste aus Strings bekommt und eine Map zurückgibt. Dabei ist der Key ein Wort aus der Liste und der Value die Häufigkeit
 fun frequency(myListOfStrings: List<String>): Map<String, Int> {
     return myListOfStrings.groupBy { it }.mapValues { it.value.size }
 }
